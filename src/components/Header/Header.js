@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Tooltip, Tabs, Tab } from '@mui/material';
+import React from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import TimelineIcon from '@mui/icons-material/Timeline';
-import BuildIcon from '@mui/icons-material/Build';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import ArticleIcon from '@mui/icons-material/Article';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // Import back arrow icon
 import { styled } from '@mui/system';
 
-// Gradient background
-const gradientBackground = 'orangered';
+// Define theme colors
+const themeColors = {
+  primary: '#1976d2', // Primary color for active links
+  secondary: '#ffffff', // Background color for the header
+  text: '#333333', // Default text color
+  shadow: '0 1px 3px rgba(0, 0, 0, 0.1)', // Box shadow for the header
+};
 
-// Header styling with gradient text
+// Header styling
 const HeaderSection = styled('div')({
   position: 'fixed',
   top: 0,
   left: 0,
   right: 0,
-  background: '#ffffff', // Background color for the header
-  color: '#333333', // Default text color for fallback
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  padding: '10px 20px',
+  background: themeColors.secondary, // Background color
+  color: themeColors.text, // Text color
+  boxShadow: themeColors.shadow, // Box shadow
+  padding: '0 20px', // Adjusted padding
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   zIndex: 1200,
-  height: '60px',
+  height: '60px', // Increased height for better spacing
 });
 
 const HeaderContent = styled('div')({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  justifyContent: 'space-between',
 });
 
 const NavContainer = styled('nav')({
   display: 'flex',
   alignItems: 'center',
+  marginRight: 'auto', // Push the navigation to the left
 });
 
 const NavList = styled('ul')({
@@ -49,136 +49,94 @@ const NavList = styled('ul')({
   listStyle: 'none',
   padding: 0,
   margin: 0,
-  gap: '20px',
+  gap: '20px', // Increased gap for better spacing
 });
 
 const NavItem = styled('li')({
   display: 'inline',
-  fontSize: '1rem',
+  fontSize: '1rem', // Adjusted font size
   fontWeight: 'bold',
 });
 
 const NavLink = styled(Link)(({ isActive }) => ({
   textDecoration: 'none',
-  color: isActive ? '#0056b3' : 'inherit',
+  color: isActive ? themeColors.primary : themeColors.text,
   fontWeight: isActive ? 'bold' : 'normal',
   display: 'flex',
   alignItems: 'center',
-  gap: '5px',
+  gap: '8px', // Increased gap between icon and text
   '&:hover': {
     textDecoration: 'underline',
   },
 }));
 
-const GradientTab = styled(Tab)({
+const IconContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
-  fontWeight: 'bold',
-  padding: '0 10px',
-  minWidth: 'auto',
-  '& .MuiTab-wrapper': {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-  },
-  '& .MuiTab-wrapper span': {
-    background: gradientBackground,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    color: 'transparent',
-  },
-  '&.Mui-selected .MuiTab-wrapper span': {
-    color: '#333333', // Default selected text color
-  },
-  '&:hover .MuiTab-wrapper span': {
-    color: '#666666', // Hover text color
-  },
+  gap: '16px', // Increased gap between icons
 });
 
-const SocialLinks = styled('div')({
+const BackButton = styled('button')({
+  background: 'none',
+  border: 'none',
+  color: themeColors.primary,
+  fontSize: '1.5rem',
+  cursor: 'pointer',
+  '&:hover': {
+    color: '#115293',
+  },
   display: 'flex',
   alignItems: 'center',
-  gap: '15px',
+  marginRight: '20px', // Ensure space between back button and navigation links
 });
 
-const iconStyle = {
-  color: gradientBackground,
-};
-
-const Header = ({ tabValue, handleTabChange }) => {
-  const [profileClicked, setProfileClicked] = useState(false);
+const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.pathname === '/profile') {
-      setProfileClicked(true);
-    }
-  }, [location]);
+  const handleBackClick = () => {
+    navigate(-1); // Navigate to the previous page
+  };
+
+  // Check if the current path is the root URL
+  const showBackButton = location.pathname !== '/';
 
   return (
     <HeaderSection>
       <HeaderContent>
+        {showBackButton && (
+          <BackButton onClick={handleBackClick}>
+            <ArrowBackIcon />
+          </BackButton>
+        )}
         <NavContainer>
           <NavList>
             <NavItem>
-              <NavLink to="/" isActive={location.pathname === '/'}>
-                <HomeIcon style={iconStyle} /> Home
+              <NavLink
+                to="/"
+                isActive={location.pathname === '/'}
+              >
+                <HomeIcon fontSize="small" /> Home
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
                 to="/profile"
                 isActive={location.pathname === '/profile'}
-                onClick={() => setProfileClicked(true)}
               >
-                <AccountCircleIcon style={iconStyle} /> My Profile
+                <AccountCircleIcon fontSize="small" /> My Profile
               </NavLink>
             </NavItem>
           </NavList>
         </NavContainer>
-        <Tabs
-          value={tabValue}
-          onChange={handleTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="Profile Navigation Tabs"
-          centered
-        >
-          <GradientTab label="Summary" icon={<AccountCircleIcon style={iconStyle} />} disabled={!profileClicked} />
-          <GradientTab label="Career Timeline" icon={<TimelineIcon style={iconStyle} />} disabled={!profileClicked} />
-          <GradientTab label="Projects" icon={<BuildIcon style={iconStyle} />} disabled={!profileClicked} />
-          <GradientTab label="Articles" icon={<ArticleIcon style={iconStyle} />} disabled={!profileClicked} />
-          <GradientTab label="Skills" icon={<BarChartIcon style={iconStyle} />} disabled={!profileClicked} />
-        </Tabs>
-        <SocialLinks>
-          <Tooltip title="LinkedIn">
-            <a
-              href="https://www.linkedin.com/in/sandeep-kumar-aggarwal-ba022555/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-            >
-              <LinkedInIcon fontSize="small" style={iconStyle} />
-            </a>
-          </Tooltip>
-          <Tooltip title="GitHub">
-            <a
-              href="https://github.com/skaggarwal1984?tab=repositories&q=&type=public&language=&sort="
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-            >
-              <GitHubIcon fontSize="small" style={iconStyle} />
-            </a>
-          </Tooltip>
-          <Tooltip title="Email">
-            <a href="mailto:skaggarwal1984@gmail.com" aria-label="Email">
-              <EmailIcon fontSize="small" style={iconStyle} />
-            </a>
-          </Tooltip>
-        </SocialLinks>
+        <IconContainer>
+          <a href="https://www.linkedin.com/in/sandeep-kumar-aggarwal-ba022555/" target="_blank" rel="noopener noreferrer">
+            <LinkedInIcon fontSize="small" />
+          </a>
+          <a href="mailto:skaggarwal1984@gmail.com">
+            <EmailIcon fontSize="small" />
+          </a>
+        </IconContainer>
       </HeaderContent>
     </HeaderSection>
   );

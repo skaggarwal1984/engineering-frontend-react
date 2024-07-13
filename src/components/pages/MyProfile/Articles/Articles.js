@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Grid, Card, CardContent, Button, Paper } from '@mui/material';
+import { Typography, Grid, Card, CardContent, Button, CardMedia, Chip } from '@mui/material';
 import { styled } from '@mui/system';
 
-// Define the gradient background for article cards
-const gradientBackground = 'linear-gradient(250deg, #f6d365 50%, #fda085 50%)';
+// Define your color palette
+const darkBlue = '#1976d2'; // Dark blue for text and accents
+const lightGrey = '#f9f9f9'; // Light grey for backgrounds
+const white = '#ffffff'; // White for text on dark backgrounds
 
 // Styled components
 const Section = styled('div')({
-  padding: '10px 20px', // Adjusted padding to match Summary component
-  marginTop: '0', // Removed any margin at the top
-  color: '#333333',
-  borderRadius: '12px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-  maxWidth: '1200px', // Added max-width for centering
-  margin: '0 auto', // Center content
+  padding: '70px 20px 50px', // Added extra padding at the top
+  backgroundColor: white, // Changed to white
 });
 
 const ArticleCard = styled(Card)({
@@ -25,28 +22,45 @@ const ArticleCard = styled(Card)({
   },
 });
 
+const ProjectMedia = styled(CardMedia)({
+  height: '150px',
+  borderTopLeftRadius: '12px',
+  borderTopRightRadius: '12px',
+});
+
 const CardContentStyled = styled(CardContent)({
   padding: '20px',
-  backgroundColor: '#ffffff',
-  color: '#333333',
+  backgroundColor: white, // Ensure background is white for content
+  color: darkBlue,
   borderBottomLeftRadius: '12px',
   borderBottomRightRadius: '12px',
 });
 
-const GradientText = styled(Typography)({
-  background: gradientBackground,
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  color: 'transparent',
+const TitleText = styled(Typography)({
   fontWeight: 'bold',
+  color: darkBlue, // Set color to darkBlue to align with theme
 });
 
 const ButtonStyled = styled(Button)({
-  background: gradientBackground,
-  color: '#ffffff',
+  background: darkBlue,
+  color: white,
   '&:hover': {
-    backgroundColor: '#0056b3',
+    background: '#004ba0', // Darker shade for hover
   },
+});
+
+const TagsContainer = styled('div')({
+  marginTop: '10px',
+  marginBottom: '10px',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '5px',
+});
+
+const ButtonContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '20px', // Optional, for spacing
 });
 
 const Articles = React.forwardRef((props, ref) => {
@@ -57,16 +71,35 @@ const Articles = React.forwardRef((props, ref) => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/articles');
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        } else {
-          throw new Error('Network response was not ok');
-        }
+        // Mock data for demonstration
+        const mockData = [
+          {
+            title: 'The 7Es Approach: My take on excelling as an Engineering Manager',
+            description: 'When I reflect on my past experiences in managing teams, I have observed that the 7 Es play a crucial role in being successful engineering manager. There is also a discernible order of priority.',
+            image: 'https://via.placeholder.com/600x150.png?text=7Es+Approach',
+            link: '/articles/article-1',
+            tags: ["Engineering Manager"]
+          },
+          {
+            title: 'The 7Ms Approach: My take on excelling as an Engineer',
+            description: 'When I reflect on my past experiences in managing teams, I have observed that the 7 Ms play a crucial role in being great engineer. There is also a discernible order of priority.',
+            image: 'https://via.placeholder.com/600x150.png?text=7Ms+Approach',
+            link: '/articles/article-2',
+            tags: ["Engineer"]
+          },
+          {
+            title: 'The 7Cs: My take on loving your workplace',
+            description: 'When I reflect on my past experiences in managing teams, I have observed that the 7 Cs play a crucial role in one decision to stay long-term. There is also a discernible order of priority.',
+            image: 'https://via.placeholder.com/600x150.png?text=7Cs+Connection',
+            link: '/articles/article-3',
+            tags: ["Workplace"]
+          },
+        ];
+
+        setArticles(mockData);
+        setLoading(false);
       } catch (error) {
         setError(error.message);
-      } finally {
         setLoading(false);
       }
     };
@@ -79,22 +112,32 @@ const Articles = React.forwardRef((props, ref) => {
 
   return (
     <Section ref={ref} id="articles">
-      <Typography variant="h5" gutterBottom align="center" marginBottom={4}>
+      <Typography variant="h4" gutterBottom align="center" marginBottom={4} color={darkBlue}>
         Articles
       </Typography>
       <Grid container spacing={4}>
         {articles.map((article, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <ArticleCard>
+              <ProjectMedia
+                image={article.image}
+                title={article.title}
+              />
               <CardContentStyled>
-                <img src={article.image} alt={article.title} style={{ width: '100%', height: 'auto', borderRadius: '12px' }} />
-                <GradientText variant="h6" gutterBottom>{article.title}</GradientText>
+                <TitleText variant="h6" gutterBottom>{article.title}</TitleText>
                 <Typography variant="body2" paragraph>
                   {article.description}
                 </Typography>
-                <ButtonStyled href={article.link} variant="contained">
-                  Read More
-                </ButtonStyled>
+                <TagsContainer>
+                  {Array.isArray(article.tags) && article.tags.map((tag, idx) => (
+                    <Chip key={idx} label={tag} color="primary" variant="outlined" />
+                  ))}
+                </TagsContainer>
+                <ButtonContainer>
+                  <ButtonStyled href={article.link} variant="contained">
+                    Read More
+                  </ButtonStyled>
+                </ButtonContainer>
               </CardContentStyled>
             </ArticleCard>
           </Grid>

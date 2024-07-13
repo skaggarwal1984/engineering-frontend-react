@@ -12,13 +12,13 @@ const shadowColor = 'rgba(0, 0, 0, 0.1)'; // Soft shadow color
 
 // Card colors
 const cardColors = [
-  '#FFDDC1', // Light peach
   '#FFABAB', // Light coral
   '#FFC3A0', // Light pink
   '#FF677D', // Light red
   '#D4A5A5', // Light brown
   '#C2C2F0', // Light lavender
-  '#B9FBC0'  // Light mint
+  '#B9FBC0', // Light mint
+  '#FFDDC1'  // Light peach
 ];
 
 // Styled components
@@ -87,36 +87,35 @@ const CardContent = styled(Typography)({
   margin: '0',
 });
 
-
-const ArticleDetail = React.forwardRef((props, ref) => {
+const ArticleDetail2 = React.forwardRef((props, ref) => {
   return (
     <>
       <Header />
-      <PageContainer ref={ref} id="article-detail">
-        <ArticleTitle>The 7Es Approach: My Take on Engineering Manager Leadership</ArticleTitle>
+      <PageContainer ref={ref} id="article-detail-2">
+        <ArticleTitle>The 7Cs: The Connection Between One and One’s Workplace</ArticleTitle>
         <IntroductionText>
-          When I reflect on my past experiences in managing teams, I've observed that the 7 Es play a crucial role in being successful engineering manager. There’s also a discernible order of priority.
+          When I reflect on my past experiences in managing teams, I've observed that the 7 Cs play a crucial role in one's decision to stay long-term. There’s also a discernible order of priority.
         </IntroductionText>
         <CardContainer>
           {cardColors.map((color, index) => (
             <Card key={index} cardColor={color}>
               <CardLabel>
-                {index === 0 && '🔍 EGO'}
-                {index === 1 && '🛠️ ENABLE'}
-                {index === 2 && '🚀 ENSURE'}
-                {index === 3 && '📊 ENTERPRISE'}
-                {index === 4 && '🔧 EMPOWER'}
-                {index === 5 && '🏆 EXEMPLARY'}
-                {index === 6 && '🌱 EXPAND'}
+                {index === 0 && '💰 Compensation'}
+                {index === 1 && '📈 Company'}
+                {index === 2 && '🏢 Credible Leaders'}
+                {index === 3 && '🌍 Culture'}
+                {index === 4 && '🚀 Career'}
+                {index === 5 && '🎓 Coaching'}
+                {index === 6 && '🤝 Celebration'}
               </CardLabel>
               <CardContent>
-                {index === 0 && 'Understanding ego plays a crucial role in building the best team culture, where members feel valued, heard, empowered, and motivated to excel.'}
-                {index === 1 && 'Enabling the team is key, revolving around aspects like culture, clarity, ownership, processes, tools, and frameworks. This ensures the development of a top-notch engineering platform and team culture, with a team hungry to push for continuous improvement.'}
-                {index === 2 && 'Ensuring a seamless customer experience on the platform is paramount. This includes non-functional requirements like latency, volume, and feature quality. Cultivating a team culture where this becomes the ethos drives success.'}
-                {index === 3 && 'Staying enterprise compliant ensures readiness to scale and meet the demands of a larger functionality scope.'}
-                {index === 4 && 'Empowering the business and enabling them with the capabilities to configure and apply, freeing up engineering capacity for other crucial tasks and avoiding redundancy.'}
-                {index === 5 && 'Delivering the best-in-class existing features ensures customers have a superior experience and shop with confidence.'}
-                {index === 6 && 'Innovating, ideating, and building new features/components ensures customers continue to experience world-class innovation and exploration.'}
+                {index === 0 && 'It starts with compensation and revisions, which define the value of one’s contributions. It is foundational, demonstrating that efforts are recognized and appreciated, and keeps trust intact.'}
+                {index === 1 && 'The growth prospects of the company and its office location play a crucial role.'}
+                {index === 2 && 'The leader’s credibility matters immensely. One wants to work with a leader who is trustworthy, reliable, mentors, and inspires.'}
+                {index === 3 && 'Culture is crucial. A positive culture means an inclusive environment where everyone feels heard and valued. Whether it’s a collaborative spirit or a go-getter attitude, a strong culture keeps one engaged and dedicated.'}
+                {index === 4 && 'One should be able to see a future within the company.'}
+                {index === 5 && 'Great leaders act as mentors and coaches. When team members receive support and guidance from leaders, they generally like to stay and grow within the organization.'}
+                {index === 6 && 'When the deserving work is celebrated on time, one feels valuable'}
               </CardContent>
             </Card>
           ))}
@@ -126,4 +125,4 @@ const ArticleDetail = React.forwardRef((props, ref) => {
   );
 });
 
-export default ArticleDetail;
+export default ArticleDetail2;

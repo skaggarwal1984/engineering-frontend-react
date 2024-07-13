@@ -1,106 +1,103 @@
 import React from 'react';
-import { Typography, Paper, Grid, Box } from '@mui/material';
+import { Typography, Box, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import { Work } from '@mui/icons-material';
 
+// Define theme colors
+const themeColors = {
+  primary: '#1976d2', // Example primary color from the theme
+  secondary: '#ffffff', // Background color for card items
+  text: '#333333', // Text color for consistency
+  shadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Box shadow for consistency
+};
+
 // Styled components
 const Section = styled('div')({
-  padding: '10px 20px', // Adjusted padding
-  marginTop: '0', // Removed any margin at the top
-  color: '#333333',
-  borderRadius: '12px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-  maxWidth: '1200px', // Added max-width for centering
-  margin: '0 auto', // Center content
+  padding: '30px 20px',
+  backgroundColor: themeColors.secondary, // White background for the section
+  position: 'relative',
 });
 
-const TimelineCard = styled(Paper)({
-  padding: '20px',
-  marginBottom: '20px',
-  backgroundColor: '#ffffff',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  borderRadius: '8px',
+const TimelineContainer = styled(Grid)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-around', // Distribute items evenly
   position: 'relative',
-  '&:hover': {
-    transform: 'scale(1.02)',
+  overflowX: 'auto', // Allows horizontal scrolling if necessary
+  padding: '20px 0',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    transform: 'translateY(-50%)',
+    width: '100%',
+    height: '2px',
+    backgroundColor: '#e0e0e0',
+    zIndex: 1,
+  },
+});
+
+const TimelineItem = styled(Box)({
+  width: '200px',
+  padding: '15px',
+  backgroundColor: themeColors.secondary, // White background for timeline items
+  boxShadow: themeColors.shadow,
+  borderRadius: '12px',
+  textAlign: 'center',
+  position: 'relative',
+  zIndex: 2,
+  '&:not(:last-child)': {
+    marginRight: '20px', // Spacing between items
   },
 });
 
 const TimelineDate = styled(Typography)({
   fontWeight: 'bold',
-  color: '#555555',
-  marginBottom: '5px',
+  color: '#777777',
+  marginBottom: '10px',
 });
 
-const GradientText = styled(Typography)({
-  background: 'linear-gradient(500deg, #f6d365 0%, #fda085 0%)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  color: 'transparent',
+const RoleText = styled(Typography)({
+  color: themeColors.primary, // Apply theme color for role text
   fontWeight: 'bold',
+  fontSize: '1.1rem',
 });
 
-const IconWrapper = styled(Box)({
-  background: '#ffffff',
-  borderRadius: '50%',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  padding: '10px',
-  position: 'absolute',
-  left: '-25px',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+const DescriptionText = styled(Typography)({
+  color: themeColors.text,
 });
 
+// Main component
 const CareerTimeline = React.forwardRef((props, ref) => {
+  const timelineData = [
+    { date: '2021 - Present', role: 'Engineering Director at Lowe\'s India', description: 'Leading multiple product engineering global teams (50+) to deliver best in class personalization & recommendations' },
+    { date: '2015 - 2020', role: 'Specialist Master at Deloitte US India', description: 'Architected & managed multiple large-scale engineering teams (30+) in delivering content platforms & enterprise assessments' },
+    { date: '2014 - 2015', role: 'Team Lead at Allstate India', description: 'Led engineering teams in supporting property insurance web applications' },
+    { date: '2007 - 2013', role: 'Team Lead at Accenture', description: 'Led engineering teams in supporting health insurance employer applications' },
+    { date: '2006 - 2007', role: 'Trainee Software Engineer at SR Infotech', description: 'Contributed to the development of accouting modules' },
+  ];
+
   return (
     <Section ref={ref}>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
-            Career Timeline
-          </Typography>
-          <TimelineCard>
-            <IconWrapper>
-              <Work color="primary" />
-            </IconWrapper>
-            <TimelineDate variant="body2">2024 - Present</TimelineDate>
-            <Box mt={2}>
-              <GradientText variant="h6">Engineering Director at Lowe's Companies, Inc.</GradientText>
-              <Typography variant="body1">
-                Leading engineering teams to deliver scalable software solutions and drive technological innovation.
-              </Typography>
-            </Box>
-          </TimelineCard>
-          <TimelineCard>
-            <IconWrapper>
-              <Work color="primary" />
-            </IconWrapper>
-            <TimelineDate variant="body2">2018 - 2024</TimelineDate>
-            <Box mt={2}>
-              <GradientText variant="h6">Senior Engineering Manager at XYZ Corp</GradientText>
-              <Typography variant="body1">
-                Managed large-scale projects and mentored engineering teams to achieve operational excellence.
-              </Typography>
-            </Box>
-          </TimelineCard>
-          <TimelineCard>
-            <IconWrapper>
-              <Work color="primary" />
-            </IconWrapper>
-            <TimelineDate variant="body2">2013 - 2018</TimelineDate>
-            <Box mt={2}>
-              <GradientText variant="h6">Software Engineer at ABC Inc.</GradientText>
-              <Typography variant="body1">
-                Contributed to the development of key software products and led initiatives to enhance system performance.
-              </Typography>
-            </Box>
-          </TimelineCard>
-          {/* Add more timeline cards as needed */}
-        </Grid>
-      </Grid>
+      <Typography variant="h4" gutterBottom align="center" color={themeColors.primary}>
+        Career Timeline
+      </Typography>
+      <TimelineContainer container spacing={3}>
+        {timelineData.map((item, index) => (
+          <Grid item key={index}>
+            <TimelineItem>
+              <TimelineDate variant="body2">{item.date}</TimelineDate>
+              <Box mt={2}>
+                <RoleText variant="h6">{item.role}</RoleText>
+                <DescriptionText variant="body1">
+                  {item.description}
+                </DescriptionText>
+              </Box>
+            </TimelineItem>
+          </Grid>
+        ))}
+      </TimelineContainer>
     </Section>
   );
 });

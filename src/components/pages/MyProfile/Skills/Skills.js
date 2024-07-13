@@ -9,19 +9,28 @@ import CloudComputingIcon from '@mui/icons-material/Cloud';
 import AgileMethodologiesIcon from '@mui/icons-material/Autorenew';
 import CodeIcon from '@mui/icons-material/Code';
 import StorageIcon from '@mui/icons-material/Storage';
+import DataUsageIcon from '@mui/icons-material/DataUsage'; // For Data Engineering
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions'; // For API Management
+import ViewQuiltIcon from '@mui/icons-material/ViewQuilt'; // For GraphQL
+import SpringIcon from '@mui/icons-material/Code'; // For Spring Framework
 
-// Sample data for Skills
+const darkBlue = '#1976d2'; // Dark blue for text and accents
+
+// Expanded sample data for Skills
 const skills = [
-  { name: 'Leadership', icon: <LeadershipIcon />, description: 'Expertise in leading high-performing teams.' },
-  { name: 'Project Management', icon: <ProjectManagementIcon />, description: 'Proven track record in managing successful projects.' },
-  { name: 'Software Architecture', icon: <SoftwareArchitectureIcon />, description: 'Designing scalable and robust software solutions.' },
-  { name: 'DevOps', icon: <DevOpsIcon />, description: 'Integrating development and operations for efficient workflows.' },
-  { name: 'Cloud Computing', icon: <CloudComputingIcon />, description: 'Implementing cloud-based solutions and architectures.' },
-  { name: 'Agile Methodologies', icon: <AgileMethodologiesIcon />, description: 'Driving agile transformations and methodologies.' },
-  { name: 'JavaScript/TypeScript', icon: <CodeIcon />, description: 'Developing dynamic and responsive web applications.' },
-  { name: 'React', icon: <CodeIcon />, description: 'Building modern user interfaces with React.' },
-  { name: 'Node.js', icon: <CodeIcon />, description: 'Server-side development using Node.js.' },
-  { name: 'Database Management', icon: <StorageIcon />, description: 'Managing and optimizing database systems.' },
+  { name: 'Leadership', icon: <LeadershipIcon />, description: 'Expertise in leading high-performing teams and delivering impactful projects.' },
+  { name: 'Project Management', icon: <ProjectManagementIcon />, description: 'Proven track record in managing complex projects and driving them to successful completion.' },
+  { name: 'Software Architecture', icon: <SoftwareArchitectureIcon />, description: 'Expert in all types of software architecture, designing and implementing scalable, robust solutions.' },
+  { name: 'Software Engineering', icon: <SpringIcon />, description: 'Lifetime experience with Spring Framework, Spring Boot, React JS, including designing and implementing scalable applications from inception.' },
+  { name: 'Database Management', icon: <StorageIcon />, description: 'Managing and optimizing relational and NoSQL database systems.' },
+  { name: 'Data Engineering', icon: <DataUsageIcon />, description: 'Designing and implementing data pipelines and ETL processes.' },
+  { name: 'DevOps', icon: <DevOpsIcon />, description: 'Integrating development and operations for efficient workflows and continuous delivery.' },
+  { name: 'Cloud Computing', icon: <CloudComputingIcon />, description: 'Implementing and managing cloud-based solutions and architectures.' },
+  { name: 'Agile Methodologies', icon: <AgileMethodologiesIcon />, description: 'Driving agile transformations and methodologies to enhance project delivery.' },
+  { name: 'Node.js', icon: <CodeIcon />, description: 'Server-side development with Node.js for scalable backend solutions.' },
+  { name: 'API Management', icon: <IntegrationInstructionsIcon />, description: 'Managing and optimizing APIs, including design, quality, and performance.' },
+  { name: 'GraphQL', icon: <ViewQuiltIcon />, description: 'Developing and managing GraphQL APIs for efficient data fetching.' },
+  { name: 'Coding Best Practices', icon: <CodeIcon />, description: 'Expert in best coding practices, quality assurance, and design controls to deliver high-quality software.' },
 ];
 
 // Define card style
@@ -36,23 +45,19 @@ const SkillCard = styled(Paper)({
     transform: 'scale(1.05)',
   },
   marginBottom: '16px',
+  backgroundColor: '#ffffff', // Matching the background color
 });
 
 const SkillIcon = styled(Box)({
-  fontSize: '32px', // Adjust icon size
+  fontSize: '32px',
   marginRight: '16px',
+  color: '#1976d2', // Matching the theme color
 });
 
-// Define the gradient background for skill labels
-const gradientBackground = 'linear-gradient(250deg, #f6d365 50%, #fda085 50%)';
-
 const SkillLabel = styled(Typography)({
-  background: gradientBackground,
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  color: 'transparent',
   fontWeight: 'bold',
-  fontSize: '16px', // Adjust font size
+  color: '#1976d2', // Matching the theme color
+  fontSize: '16px',
 });
 
 const SkillDescription = styled(Typography)({
@@ -62,8 +67,8 @@ const SkillDescription = styled(Typography)({
 
 const Skills = React.forwardRef((props, ref) => {
   return (
-    <Box sx={{ padding: '10px 20px', marginTop: '0', color: '#333333', borderRadius: '12px', maxWidth: '1200px', margin: '0 auto' }} ref={ref} id="skills">
-      <Typography variant="h5" gutterBottom align="center" marginBottom={4}>
+    <Box sx={{ padding: '10px 20px', color: '#333333', borderRadius: '12px', maxWidth: '1200px', margin: '0 auto' }} ref={ref} id="skills">
+      <Typography variant="h4" gutterBottom align="center" marginBottom={4} color={darkBlue}>
         Skills
       </Typography>
       <Grid container spacing={4} justifyContent="center">
